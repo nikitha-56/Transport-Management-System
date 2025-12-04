@@ -1,10 +1,15 @@
 package com.tms.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Transporter {
 
     @Id
@@ -14,9 +19,12 @@ public class Transporter {
     private String companyName;
     private double rating;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TruckCapacity> availableTrucks;
 
-    // Getters and Setters
-}
+    @OneToMany(mappedBy = "transporter", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Bid> bids; // Bids made by transporter
 
+    @OneToMany(mappedBy = "transporter", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Booking> bookings; // Bookings by transporter
+}
