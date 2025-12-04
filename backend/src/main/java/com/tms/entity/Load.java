@@ -1,24 +1,23 @@
 package com.tms.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import lombok.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Data                 //for getters and setters
-@NoArgsConstructor     
-@AllArgsConstructor     
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Load {
 
     @Id
     @GeneratedValue
     private UUID loadId;
 
-    private String shipperId;
+    private String shipperId; // Assuming shippers are just represented by ID
+
     private String loadingCity;
     private String unloadingCity;
     private LocalDateTime loadingDate;
@@ -34,6 +33,11 @@ public class Load {
     private LocalDateTime datePosted;
 
     @Version
-    private Long version; // for optimistic locking
+    private Long version;
 
+    @OneToMany(mappedBy = "load", cascade = CascadeType.ALL, orphanRemoval = true)
+    private java.util.List<Bid> bids; // All bids for this load
+
+    @OneToMany(mappedBy = "load", cascade = CascadeType.ALL, orphanRemoval = true)
+    private java.util.List<Booking> bookings; // All bookings for this load
 }

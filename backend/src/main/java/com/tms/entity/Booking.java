@@ -11,9 +11,18 @@ public class Booking {
     @GeneratedValue
     private UUID bookingId;
 
-    private UUID loadId;
-    private UUID bidId;
-    private UUID transporterId;
+    @ManyToOne
+    @JoinColumn(name = "load_id", nullable = false)
+    private Load load;
+
+    @ManyToOne
+    @JoinColumn(name = "bid_id", nullable = false)
+    private Bid bid;
+
+    @ManyToOne
+    @JoinColumn(name = "transporter_id", nullable = false)
+    private Transporter transporter;
+
     private int allocatedTrucks;
     private double finalRate;
 
@@ -21,7 +30,4 @@ public class Booking {
     private BookingStatus status; // CONFIRMED, COMPLETED, CANCELLED
 
     private LocalDateTime bookedAt;
-
-    // Getters and Setters
 }
-

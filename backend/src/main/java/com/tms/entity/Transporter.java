@@ -22,6 +22,7 @@ public class Transporter {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TruckCapacity> availableTrucks;
 
+    
     @OneToMany(mappedBy = "transporter", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Bid> bids; // Bids made by transporter
 
